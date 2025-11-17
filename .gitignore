@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Scrapper trace logs
+trace/**/*.log
+trace/**/*.log.*
+trace/**/*.json.log
