@@ -1,0 +1,147 @@
+%% Scrapper - Social Media Data Collection Engine
+%% Software Architecture Diagram
+%% Generated: 2025-11-21
+
+graph TB
+    subgraph "External Data Sources"
+        Twitter[Twitter API]
+        TikTok[TikTok API]
+        XHS[XiaoHongShu API]
+        YouTube[YouTube API]
+    end
+
+    subgraph "Data Collection Layer (sources/)"
+        TwitterScraper[TwitterScraper]
+        TikTokScraper[TikTokScraper]
+        XHSScraper[XiaoHongShuScraper]
+        YouTubeScraper[YouTubeScraper]
+    end
+
+    subgraph "Core Orchestration (core/)"
+        ScrapperManager[ScrapperManager]
+    end
+
+    subgraph "Data Processing Layer (data_processing/)"
+        ContentNormalizer[ContentNormalizer]
+        TrendDetector[TrendDetector]
+        SentimentAnalyzer[SentimentAnalyzer]
+    end
+
+    subgraph "Feed System (feeds/)"
+        FeedAggregator[FeedAggregator]
+        FeedEnricher[FeedEnricher]
+    end
+
+    subgraph "Storage Layer (storage/)"
+        RawDataStore[RawDataStore<br/>PostgreSQL]
+        CacheManager[CacheManager<br/>Redis]
+    end
+
+    subgraph "Monitoring Layer (monitoring/)"
+        ScrapingMonitor[ScrapingMonitor]
+        RateLimiter[RateLimiter]
+        HealthCheck[HealthCheck]
+    end
+
+    subgraph "Configuration & Utilities (config/, utils/)"
+        Config[Configuration<br/>scrapper_config.py]
+        Logger[Centralized Logger<br/>File-based Logging]
+        LogConfig[Logging Configuration<br/>logging_config.py]
+    end
+
+    subgraph "Trace System (trace/)"
+        ScraperLogs[trace/scrapers/]
+        ProcessingLogs[trace/processing/]
+        FeedLogs[trace/feeds/]
+        StorageLogs[trace/storage/]
+        MonitoringLogs[trace/monitoring/]
+        ErrorLogs[trace/errors/]
+        PerfLogs[trace/performance/]
+    end
+
+    %% Data Flow - Primary Pipeline
+    Twitter --> TwitterScraper
+    TikTok --> TikTokScraper
+    XHS --> XHSScraper
+    YouTube --> YouTubeScraper
+
+    TwitterScraper --> ScrapperManager
+    TikTokScraper --> ScrapperManager
+    XHSScraper --> ScrapperManager
+    YouTubeScraper --> ScrapperManager
+
+    ScrapperManager --> ContentNormalizer
+    ContentNormalizer --> TrendDetector
+    ContentNormalizer --> SentimentAnalyzer
+
+    TrendDetector --> FeedAggregator
+    SentimentAnalyzer --> FeedAggregator
+    
+    FeedAggregator --> FeedEnricher
+    
+    ContentNormalizer --> RawDataStore
+    FeedEnricher --> RawDataStore
+    
+    RawDataStore --> CacheManager
+    
+    %% Monitoring & Control Flow
+    RateLimiter -.rate limiting.-> TwitterScraper
+    RateLimiter -.rate limiting.-> TikTokScraper
+    RateLimiter -.rate limiting.-> XHSScraper
+    RateLimiter -.rate limiting.-> YouTubeScraper
+    
+    ScrapingMonitor -.monitors.-> TwitterScraper
+    ScrapingMonitor -.monitors.-> TikTokScraper
+    ScrapingMonitor -.monitors.-> XHSScraper
+    ScrapingMonitor -.monitors.-> YouTubeScraper
+    
+    HealthCheck -.health checks.-> ScrapperManager
+    HealthCheck -.health checks.-> RawDataStore
+    HealthCheck -.health checks.-> CacheManager
+
+    %% Configuration & Logging
+    Config -.configures.-> ScrapperManager
+    Config -.configures.-> TwitterScraper
+    Config -.configures.-> TikTokScraper
+    Config -.configures.-> XHSScraper
+    Config -.configures.-> YouTubeScraper
+    
+    LogConfig --> Logger
+    
+    Logger -.logs.-> ScraperLogs
+    Logger -.logs.-> ProcessingLogs
+    Logger -.logs.-> FeedLogs
+    Logger -.logs.-> StorageLogs
+    Logger -.logs.-> MonitoringLogs
+    Logger -.logs.-> ErrorLogs
+    Logger -.logs.-> PerfLogs
+    
+    TwitterScraper -.uses.-> Logger
+    TikTokScraper -.uses.-> Logger
+    XHSScraper -.uses.-> Logger
+    YouTubeScraper -.uses.-> Logger
+    ScrapperManager -.uses.-> Logger
+    ContentNormalizer -.uses.-> Logger
+    TrendDetector -.uses.-> Logger
+    SentimentAnalyzer -.uses.-> Logger
+    FeedAggregator -.uses.-> Logger
+    FeedEnricher -.uses.-> Logger
+    RawDataStore -.uses.-> Logger
+    CacheManager -.uses.-> Logger
+    ScrapingMonitor -.uses.-> Logger
+    RateLimiter -.uses.-> Logger
+
+    %% Output
+    FeedEnricher --> Output[Unified Feed System<br/>for Arena Simulation]
+
+    %% Styling
+    classDef implemented fill:#90EE90,stroke:#228B22,stroke-width:3px
+    classDef planned fill:#FFE4B5,stroke:#FFA500,stroke-width:2px
+    classDef infrastructure fill:#87CEEB,stroke:#4682B4,stroke-width:2px
+    classDef external fill:#FFB6C1,stroke:#DC143C,stroke-width:2px
+    classDef logs fill:#E6E6FA,stroke:#6A5ACD,stroke-width:1px
+
+    class Logger,LogConfig,ScraperLogs,ProcessingLogs,FeedLogs,StorageLogs,MonitoringLogs,ErrorLogs,PerfLogs implemented
+    class TwitterScraper,TikTokScraper,XHSScraper,YouTubeScraper,ContentNormalizer,TrendDetector,SentimentAnalyzer,FeedAggregator,FeedEnricher,RawDataStore,CacheManager,ScrapingMonitor,RateLimiter,HealthCheck,Config,ScrapperManager planned
+    class Twitter,TikTok,XHS,YouTube external
+
