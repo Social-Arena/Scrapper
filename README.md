@@ -9,7 +9,8 @@ Scrapper is responsible for:
 - **Real-time trend monitoring**: Detecting and tracking viral content and trending topics
 - **Data normalization**: Converting platform-specific data into a unified Feed format
 - **Data enrichment**: Adding sentiment analysis, entity recognition, and topic classification
-
+ 
+ 
 ## Project Structure
 
 ```
