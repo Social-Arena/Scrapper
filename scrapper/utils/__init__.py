@@ -1,7 +1,1 @@
-"""
-Scrapper Utilities
-"""
-
-from .logger import get_logger
-
-__all__ = ['get_logger']
+"""Utility modules for Scrapper."""
