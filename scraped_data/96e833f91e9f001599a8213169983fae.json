@@ -1,0 +1,25 @@
+{
+  "id": "96e833f91e9f001599a8213169983fae",
+  "platform": "twitter",
+  "data": {
+    "id": "tweet_Breaking_6_1763682239",
+    "text": "Amazing content about #Breaking! This is tweet 6.",
+    "user": {
+      "id": "user_Breaking_6",
+      "username": "user_6",
+      "followers_count": 15729
+    },
+    "created_at": "2025-11-20T18:43:59.893289Z",
+    "like_count": 574,
+    "retweet_count": 175,
+    "reply_count": 82,
+    "quote_count": 29,
+    "public_metrics": {
+      "like_count": 241,
+      "retweet_count": 172,
+      "reply_count": 86,
+      "quote_count": 24
+    }
+  },
+  "scraped_at": "2025-11-20T18:43:59.898432"
+}

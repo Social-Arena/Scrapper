@@ -1,0 +1,25 @@
+{
+  "id": "73ad8df2bc8c2ca7185f399a25d18f86",
+  "platform": "twitter",
+  "data": {
+    "id": "tweet_Viral_9_1763682239",
+    "text": "Amazing content about #Viral! This is tweet 9.",
+    "user": {
+      "id": "user_Viral_9",
+      "username": "user_9",
+      "followers_count": 43245
+    },
+    "created_at": "2025-11-20T18:43:59.893264Z",
+    "like_count": 343,
+    "retweet_count": 64,
+    "reply_count": 9,
+    "quote_count": 20,
+    "public_metrics": {
+      "like_count": 492,
+      "retweet_count": 160,
+      "reply_count": 64,
+      "quote_count": 26
+    }
+  },
+  "scraped_at": "2025-11-20T18:43:59.897813"
+}
